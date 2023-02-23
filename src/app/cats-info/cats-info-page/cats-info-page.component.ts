@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {CatsInfoService} from "./cats-info.service";
 import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
-import {filter, switchMap, tap} from "rxjs";
+import {filter, Subscription, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-cats-info-page',
@@ -10,6 +10,7 @@ import {filter, switchMap, tap} from "rxjs";
 })
 export class CatsInfoPageComponent {
   public items$ = this._cats.data$;
+  private _sub!: Subscription;
 
   @ViewChild(CdkVirtualScrollViewport) virtualScroll!: CdkVirtualScrollViewport;
 
@@ -20,7 +21,7 @@ export class CatsInfoPageComponent {
   }
 
   ngAfterViewInit() {
-    this.virtualScroll.elementScrolled()
+    this._sub = this.virtualScroll.elementScrolled()
       .pipe(
         filter(() => {
           const dist = this.virtualScroll.measureScrollOffset('bottom');
@@ -32,6 +33,12 @@ export class CatsInfoPageComponent {
       .subscribe(() => {
         this._cdr.detectChanges();
       });
+  }
+
+  ngOnDestroy() {
+    if (this._sub) {
+      this._sub.unsubscribe();
+    }
   }
 
 }

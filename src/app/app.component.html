@@ -1,6 +1,12 @@
-<div *ngIf="showNavbar | async">
-  Navbar
-  <button (click)="logout()">Logout</button>
+<div *ngIf="showNavbar | async" class="app-header" >
+  <mat-toolbar >
+    <div class="right-toolbar-container overflow-hidden" >
+      <p>Welcome (<button (click)="logout()">Logout</button>)</p>
+
+    </div>
+  </mat-toolbar>
 </div>
 
-<router-outlet></router-outlet>
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>
