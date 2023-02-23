@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {RouterModule} from "@angular/router";
 import {IsAuthenticated} from "./services/is-authenticated.guard";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -17,7 +19,7 @@ import {IsAuthenticated} from "./services/is-authenticated.guard";
         loadChildren: () =>
           import('./cats-info/cats-info.module')
             .then((m) => m.CatsInfoModule),
-        canActivate: [IsAuthenticated]
+        // canActivate: [IsAuthenticated]
       },
       {
         path: 'auth',
@@ -26,7 +28,9 @@ import {IsAuthenticated} from "./services/is-authenticated.guard";
             .then((m) => m.AuthModule)
       },
       { path: '**', redirectTo: '', pathMatch: 'full' }
-    ])
+    ]),
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

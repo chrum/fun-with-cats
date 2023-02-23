@@ -1,1 +1,6 @@
 <p>cats-info-page works!</p>
+
+
+<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+  <div *cdkVirtualFor="let item of items$ | async" class="example-item">{{item}}</div>
+</cdk-virtual-scroll-viewport>
